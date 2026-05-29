@@ -9,8 +9,8 @@ import './BorrowModal.css';
 interface BorrowModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSuccess?: () => void; // Optional callback
-  borrow?: any; // Nếu có thì là edit mode, không có thì là create mode
+  onSuccess?: () => void;
+  borrow?: any;
 }
 
 const BorrowModal: React.FC<BorrowModalProps> = ({ isOpen, onClose, onSuccess, borrow }) => {
@@ -93,7 +93,7 @@ const BorrowModal: React.FC<BorrowModalProps> = ({ isOpen, onClose, onSuccess, b
     if (formData.borrow_date && !borrow) {
       const selected = new Date(formData.borrow_date);
       const due = new Date(selected);
-      due.setDate(due.getDate() + 14); // Mặc định 14 ngày
+      due.setDate(due.getDate() + 14);
       setFormData(prev => ({
         ...prev,
         due_date: due.toISOString().split('T')[0]
@@ -108,7 +108,7 @@ const BorrowModal: React.FC<BorrowModalProps> = ({ isOpen, onClose, onSuccess, b
         reader.email?.toLowerCase().includes(readerSearch.toLowerCase()) ||
         reader.phone?.includes(readerSearch)
       );
-      setFilteredReaders(filtered.slice(0, 10)); // Giới hạn 10 kết quả
+      setFilteredReaders(filtered.slice(0, 10));
       setShowReaderDropdown(true);
     } else {
       setFilteredReaders([]);
@@ -126,8 +126,7 @@ const BorrowModal: React.FC<BorrowModalProps> = ({ isOpen, onClose, onSuccess, b
         setBooks([]);
         setSearchingBooks(false);
       }
-    }, 500); // Debounce 500ms để tránh gọi API quá nhiều
-
+    }, 500); 
     return () => clearTimeout(timeoutId);
   }, [bookSearch]);
 
@@ -152,7 +151,7 @@ const BorrowModal: React.FC<BorrowModalProps> = ({ isOpen, onClose, onSuccess, b
       setLoadingData(true);
       const readersData = await apiThuVien.getAllReaders(1, 100, '');
       setReaders(readersData.readers || []);
-      setBooks([]); // Không load sách ban đầu
+      setBooks([]); 
     } catch (error) {
       console.error('Lỗi khi tải dữ liệu:', error);
     } finally {
@@ -173,7 +172,7 @@ const BorrowModal: React.FC<BorrowModalProps> = ({ isOpen, onClose, onSuccess, b
       const booksData = await apiThuVien.layDanhSachSach(1, searchTerm);
       const booksList = booksData.duLieu || booksData.books || [];
       setBooks(booksList);
-      setFilteredBooks(booksList.slice(0, 20)); // Hiển thị tối đa 20 kết quả
+      setFilteredBooks(booksList.slice(0, 20)); 
       setShowBookDropdown(true);
     } catch (error) {
       console.error('Lỗi khi tìm kiếm sách:', error);

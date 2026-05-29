@@ -293,7 +293,7 @@ const BorrowController = {
         return res.status(404).json({ message: 'Không tìm thấy phiếu mượn hoặc đã trả' });
       }
       
-      const borrow = borrows[0];
+      const borrow = borrows[0];  
       
       await connection.query(`
         UPDATE BorrowRecords 

@@ -151,11 +151,11 @@ const BorrowsPage: React.FC = () => {
             type="text"
             placeholder="Tìm kiếm theo tên bạn đọc, tên sách, tác giả..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e: { target: { value: any; }; }) => setSearchTerm(e.target.value)}
           />
           <select
             value={statusFilter}
-            onChange={(e) => {
+            onChange={(e: { target: { value: any; }; }) => {
               setStatusFilter(e.target.value);
               setPage(1);
             }}
@@ -198,7 +198,7 @@ const BorrowsPage: React.FC = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {borrows.map((borrow) => (
+                  {borrows.map((borrow: { borrow_id: number; days_overdue_calc: number; reader_name: any; reader_email: any; book_title: any; category_name: any; book_author: any; borrow_date: string; due_date: string; return_date: any; }) => (
                     <tr key={borrow.borrow_id} className={borrow.days_overdue_calc > 0 ? 'overdue-row' : ''}>
                       <td>
                         <div className="reader-cell">
@@ -277,7 +277,7 @@ const BorrowsPage: React.FC = () => {
             {pagination && pagination.totalPages > 1 && (
               <div className="pagination">
                 <button 
-                  onClick={() => setPage(p => Math.max(1, p - 1))}
+                  onClick={() => setPage((p: number) => Math.max(1, p - 1))}
                   disabled={page === 1}
                 >
                   Trước
@@ -286,7 +286,7 @@ const BorrowsPage: React.FC = () => {
                   Trang {pagination.page} / {pagination.totalPages}
                 </span>
                 <button 
-                  onClick={() => setPage(p => Math.min(pagination.totalPages, p + 1))}
+                  onClick={() => setPage((p: number) => Math.min(pagination.totalPages, p + 1))}
                   disabled={page === pagination.totalPages}
                 >
                   Sau
